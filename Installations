@@ -1,0 +1,84 @@
+Installations for setting up development environment:
+
+easy-install sublime
+Download Xcode9.4.1 (needed to install homebrew)
+Download Command Line Tools (needed to install homebrew)
+
+I installed python 3.5.5 with homebrew and pyenv in:
+/usr/local/var/pyenv/versions/3.5.5
+
+
+Alternative to Homebrew:
+Just download python version from python webpage
+and install it...
+
+Then pip didn't work, so I add the following to my pip config file inside my virtual env
+vi $VIRTUAL_ENV/pip.conf
+
+Also doesn't work, so:
+brew install openssl
+brew unlink openssl && brew link openssl --force
+
+also doesnt work, so:
+export CFLAGS="-I/usr/local/opt/openssl/include"
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+
+also doesnt work, so:
+
+SO, install python again, but this thime changing somethin in the setup file:
+I got around this by uncommenting lines 209-212 in Python-3.6.0/Modules/Setup
+
+SSL=/usr/local/ssl
+_ssl _ssl.c \
+        -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
+        -L$(SSL)/lib -lssl -lcrypto
+
+then again navigate to python folder and:
+./configure
+make
+make install
+
+
+Install Homebrew by:
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+add to ~/.profile:
+export PATH=/usr/local/bin:/usr/local/bin:$PATH
+
+Now install finally python:
+brew install python
+
+Rest: Follow the instructions from Gitlab with virtualenv etc.
+Actually, for the virtualenv, make sure to use usr/local/bin instead of usr/bin to point to python3.5, so
+virtualenv --python=/usr/local/bin/python3.5 venv
+
+Don't forget to also install gcloud as described in install.md
+gcloud config list
+run: gcloud auth application-default login
+
+
+
+Jupyter Notebook:
+sudo pip install --upgrade pip
+sudo pip install jupyter
+
+
+Java Stuff:
+Download JDK from Java website
+find out your java home:
+echo $JAVA_HOME
+
+Replace JAVA_HOME WITH EXISTING PATH and Use as keystore password: changeit
+keytool --importcert --keystore $JAVA_HOME/jre/lib/security/cacerts --file lastmile-root.pem --alias lastmile-root
+
+Do this for the 4 files listed in the online guide
+
+Other Apps:
+Pycharm
+Sourcetree
+
+
+
+Downloaded Apps for Android:
+VIP Access (Symantec) : 216777 SYMC 51525761
+JJ

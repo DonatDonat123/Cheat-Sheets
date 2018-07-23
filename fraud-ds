@@ -1,0 +1,45 @@
+Activate virtualenv (with Python3.5)
+source py35/bin/activate
+
+
+Use main_ds.py:
+In config dataset_id is fixed. But you can pass different one in command by: just pass -x and copy the line from config file to change
+
+
+BigQuery --> GCS: export
+GCS --> local: download
+
+Train Test Split: Use -a format -m c5 "{cv: int}" 
+.cases == TEST DATA
+.data == TRAIN DATA
+.names == Header File
+libsvm --> spark
+
+train ML local: just follow the help :P
+
+Use gcloud models: Use deploy: 1 to upload the necessary gcloud package and deploy: 2 to expose the model as API
+Gcloud is always online ! That means you need to produce train test data sets manually via SQL queries
+Gcloud only accepts normalized data !!!
+To predict with gcloud_sk etc, pass -x "{incloud: 1, ml_model: tree/forest}"
+
+Interesting tables: (Also look in the overview which features they have)
+osp_mol : Failed payments
+osp_reserve: Failed pre-auth
+ocean_osd:
+ocean_mold:
+
+table_sharded: Created every day freshly
+table_partitioned: Big table, that contains column for partitioned_data
+osp_mi: has the problem of 0 frauds after specific month because they made pre-auth for everyone !
+
+SIT: Test environment before production
+Sku: product_id
+
+OSPFRAUD-646 TICKET
+./main_ds.py -a <learn | predict> -m <gcloud_tf | gcloud_sk | gcloud_xgb> -p <problem_id> -x "{ml_cloud_model_version: <my_name>, ml_data_has_names: <True | False>, deploy: 2}"
+./main_ds.py -a learn -m gcloud_tf -p iris_norm -x "{deploy: 2}"
+
+?????
+ml_cloud_model_version
+Which header -csv file should we test ??? In any case, it should work both with both, right ? 
+ocd_orders_ml_norm_sample005

@@ -1,0 +1,51 @@
+ssh dennis93@zleih27.physik.fu-berlin.de
+ssh dennis93@sheldon.physik.fu-berlin.de
+sftp dennis93@zleih27.physik.fu-berlin.de
+get -r --> get directory
+tar -xzf --> Entpacken
+scancel -u dennis93 --> kill all jobs
+squeue dennis93 --> show my jobs
+
+
+scp /home/dd/Desktop/tm2.sh dennis93@sheldon.physik.fu-berlin.de:/scratch/dennis93 --> Safe copy
+
+
+~pimhof/bin/c37b2 <input> output
+rm -r ./*  --> Ordner Inhalt löschen
+cp /home/usr/dir/{file1,file2,file3,file4} /home/usr/destination/ --> mehrere Dateien kopieren
+
+tail -f file.out --> Follow your file being written
+
+!export CHMTM_FPROG=/home/pimhof/bin/chm_mndo_mulliken  --> Vor dem ausführen der Jar datei, damit Charmm die richte QM-Rechnung macht
+
+java -jar ../dist/TN.jar -all toy.ini > output  (Im ordner 5w) Um States zu generieren
+
+net/grouphome/ag-imhof --> Dateien der AG
+
+------------------------
+
+Shortcuts: https://help.ubuntu.com/community/KeyboardShortcuts
+
+
+
+-----------------------
+
+GitLab:
+
+
+    Neuen Ordner erstellen: mkdir REPO
+    In Ordner wechseln: cd REPO
+    Git-Infrastruktur erstellen: git init
+    z.B. ein README anlegen: touch README
+    README unter Versionskontrolle stellen: git add README
+    Erstes Commit durchführen: git commit -m 'first commit'
+    Den Server 'git.imp.fu-berlin.de' als Remote-Ziel festlegen:
+    git remote add origin git@git.imp.fu-berlin.de:<username>/REPO.git
+    Änderungen auf den Server sichern: git push -u origin master 
+
+Einrichtung eines bestehenden Repositories
+
+    in das existierende Verzeichnis wechseln: cd existing_git_repo
+    Remote-Ziel hinzufügen: git remote addgi origin git@git.imp.fu-berlin.de:<username>/REPO.git
+    Repo auf dem Server sichern: git push -u origin master 
+

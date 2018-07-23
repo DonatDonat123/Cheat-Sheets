@@ -1,0 +1,8 @@
+Delete:
+DELETE FROM table1 WHERE name = 'George';
+DELETE FROM table1 WHERE id > 0; --> Deletes all rows
+
+Deduplicate with magic line:
+Partitioned_by etc...
+
+Date Time Splitting:
