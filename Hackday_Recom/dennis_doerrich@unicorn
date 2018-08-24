@@ -1,0 +1,158 @@
+
+# coding: utf-8
+
+# In[2]:
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# # Load Stuff
+
+# In[120]:
+
+
+folderpath = './data/'
+filename_test = 'testing'
+filename_train = 'training'
+filename_black = 'banned_skus'
+filename_submission = 'submission'
+
+
+# In[41]:
+
+
+df_test = pd.read_csv(folderpath + filename_test + '.csv')
+
+
+# In[9]:
+
+
+df_train = pd.read_csv(folderpath + filename_train + '.csv')
+
+
+# In[99]:
+
+
+blacklist = pd.read_csv(folderpath + filename_black + '.csv')
+
+
+# In[129]:
+
+
+submission1 = pd.read_csv(folderpath + filename_submission + '.csv', header=None)
+
+
+# In[14]:
+
+
+# Subsample of only 1M
+df_train_mini = df_train.iloc[:1000000,:]
+
+
+# In[15]:
+
+
+# How many segments & Shapes
+print (np.unique(df_train.segment))
+print (df_train.shape)
+print (df_train_mini.shape)
+
+
+# # Magic1: Most Popular Skus
+
+# In[131]:
+
+
+#segment is just a placeholder because my pandas skill are ugly
+pop_skus = df_train_mini.loc[:,['sku', 'segment']].groupby('sku').count()
+
+
+# In[132]:
+
+
+# delete forbidden items:
+print (len(pop_skus))
+pop_skus = pop_skus[~pop_skus.index.isin(blacklist.sku)]
+print (len(pop_skus))
+
+
+# In[116]:
+
+
+# Get popular skus
+selected_skus = pop_skus.sort_values(by=['segment']) 
+selected_skus = selected_skus.iloc[:-21:-1]
+selected_skus = selected_skus.index.tolist()
+
+
+# In[ ]:
+
+
+# Make Submission File:
+customer_ids = np.unique(df_test.customer_no)
+with open(folderpath+'magic1.csv', 'w') as file:
+    file.write('customer_no, sku\n')
+    for customer in customer_ids:
+        for item in selected_skus:
+            file.write('{},{}\n'.format(customer, item))
+    file.close()
+print ('Successfully wrote submission file')
+
+
+# # Magic 2: Most Popular Skus per Segment
+
+# In[136]:
+
+
+df_seg = df_train_mini.loc[df_train_mini.segment==2,:]
+
+
+# In[137]:
+
+
+print (df_train_mini.shape)
+print (df_seg.shape)
+
+
+# In[143]:
+
+
+segments = [1,2,3,4,5,6,7]
+SEGMENT_SKUS = []
+for seg in segments:
+    df_seg = df_train_mini.loc[df_train_mini.segment==seg,:]
+    pop_skus = df_seg.loc[:,['sku', 'segment']].groupby('sku').count()
+    # delete forbidden items:
+    #print (len(pop_skus))
+    pop_skus = pop_skus[~pop_skus.index.isin(blacklist.sku)]
+    #print (len(pop_skus))
+    # Get 20 most popular skus
+    selected_skus = pop_skus.sort_values(by=['segment']) 
+    selected_skus = selected_skus.iloc[:-21:-1]
+    selected_skus = selected_skus.index.tolist()
+    SEGMENT_SKUS.append(selected_skus)
+print(np.shape(SEGMENT_SKUS))
+
+
+# In[162]:
+
+
+# Make Submission File:
+# Convert data-frame to numpy array so I can filter forbidden testpairs easier
+testarray = np.asarray(df_test[['customer_no', 'sku']])
+with open(folderpath+'magic2_legal.csv', 'w') as file:
+    file.write('customer_no, sku\n')
+    for seg in segments:
+        customer_ids = np.unique(df_test[df_test.segment==seg].customer_no)
+        for customer in customer_ids:
+            for item in SEGMENT_SKUS[seg-1]:
+                if [customer, item] not in testarray:
+                    file.write('{},{}\n'.format(customer, item))
+        print ('segment {} finished'.format(seg))
+    file.close()
+print ('Successfully wrote submission file')
+
+

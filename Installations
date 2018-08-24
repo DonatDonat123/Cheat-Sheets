@@ -6,6 +6,7 @@ Download Command Line Tools (needed to install homebrew)
 
 I installed python 3.5.5 with homebrew and pyenv in:
 /usr/local/var/pyenv/versions/3.5.5
+/usr/local/Cellar/python/3.7.0
 
 
 Alternative to Homebrew:
