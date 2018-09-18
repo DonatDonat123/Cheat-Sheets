@@ -74,6 +74,14 @@ keytool --importcert --keystore $JAVA_HOME/jre/lib/security/cacerts --file lastm
 
 Do this for the 4 files listed in the online guide
 
+
+For Apache Spark:
+https://medium.freecodecamp.org/installing-scala-and-apache-spark-on-mac-os-837ae57d283f
+
+Set Version of Java to 1.8 in order to work
+https://stackoverflow.com/questions/38602889/failed-to-initialize-compiler-object-java-lang-object-in-compiler-mirror-not-fo
+
+
 Other Apps:
 Pycharm
 Sourcetree
